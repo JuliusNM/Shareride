@@ -1,11 +1,11 @@
 <template>
   <div class="cab">
     <b-container class="">
-    <b-row class="cab">
+    <b-row class="">
       <b-col>
-       <h2>Get started with a free account</h2>
-       <p>Create a free Shareride account and start sharing rides.</p>
-     <img src="/static/images/logo.png"alt="Kitchen" />
+       <h2>Start sharing your ride with friends.</h2>
+       <p>Let people know where you are and where you are headed</p>
+     <img src="/static/images/share.jpg" style="width:600px; height: 300px;"alt="Kitchen" />
       </b-col>
       <b-col>
         <div>
@@ -68,7 +68,7 @@ export default {
       evt.preventDefault()
       alert(JSON.stringify(this.form))
       var router = new VueRouter()
-      this.$router.push('/info')
+      this.$router.push('/getride')
       router.go()
     }
   }
@@ -76,7 +76,6 @@ export default {
 
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1, h2 {
   font-weight: normal;
@@ -98,5 +97,6 @@ a {
 .cab {
 margin-top: 60px;
 align-items: center;
+align-content: center;
 }
 </style>

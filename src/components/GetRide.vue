@@ -35,35 +35,23 @@
            @filtered="onFiltered"
   >
     <template slot="actions" scope="row">
-      <!-- We use click.stop here to prevent a 'row-clicked' event from also happening -->
-      <b-btn v-b-modal.modalPrevent @click.stop="details(row.item,row.index,$event.target)">Book</b-btn>
+      <b-btn class="btn-success" v-b-modal.modalPrevent @click.stop="details(row.item,row.index,$event.target)">Book</b-btn>
     </template>
   </b-table>
 
   <p>
     Sort By: {{ sortBy || 'n/a' }}, Direction: {{ sortDesc ? 'descending' : 'ascending' }}
   </p>
-
-  <!-- Details modal -->
-  <b-modal id="modal1" @hide="resetModal" ok-only>
-    <h4 class="my-1 py-1" slot="modal-header">{{ modalDetails.index }}</h4>
-    <pre>{{ modalDetails.data }}</pre>
-  </b-modal>
-
   <div>
-  <!--<div class="mt-3 mb-3">
-      Submitted Emails:
-      <ul>
-        <li v-for="n in email">{{n}}</li>
-      </ul>
-    </div> -->
     <!-- Modal Component -->
     <b-modal id="modalPrevent"
       ref="modal"
       title="Confirm email to book"
       @ok="handleOk"
       @shown="clearEmail">
+      <p class="my-1 py-1" slot="modal-header">You're booking a ride from &nbsp{{ modalDetails.data }}&nbsp to {{ modalDetails.data2 }}</p>
       <form @submit.stop.prevent="handleSubmit">
+        <header>Please confirm your email to receive your ticket</header>
         <b-form-input type="email"
           placeholder="Enter your email"
           required
@@ -107,6 +95,9 @@ const items = [
     capacity: '5'}
 ]
 
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+Vue.use(VueRouter)
 export default {
   data () {
     return {
@@ -126,14 +117,15 @@ export default {
       filter: null,
       modalDetails: { index: '', data: '' },
       email: '',
-      names: []
+      emails: []
     }
   },
   methods: {
     details (item, index, button) {
-      this.modalDetails.data = JSON.stringify(item, null, 2)
+      this.modalDetails.data = JSON.stringify(item.origin, null, 2)
+      this.modalDetails.data2 = JSON.stringify(item.destination, null, 2)
       this.modalDetails.index = index
-      this.$root.$emit('bv::show::modal', ' modal1', button)
+      this.$root.$emit('bv::show::modal', ' modalPrevent', button)
     },
     resetModal () {
       this.modalDetails.data = ''
@@ -149,22 +141,33 @@ export default {
         alert('Please enter your email')
       } else {
         this.handleSubmit()
+        this.sendMail()
       }
     },
     handleSubmit () {
-      this.names.push(this.email)
+      this.emails.push(this.email)
       this.clearEmail()
       this.$refs.modal.hide()
+      var router = new VueRouter()
+      this.$router.push('/thanks')
+      router.go()
     },
     clearEmail () {
       this.email = ''
+    },
+    sendMail () {
+      var link = 'mailto:someone@mail.com' +
+        '?cc=jayenem16@gmail.com' +
+         '$subject=' + escape('You have booked a ride from &nbsp{{ modalDetails.data }}&nbsp to {{ modalDetails.data2 }}') +
+          document.getElementById('email').value +
+         '$body=' + escape(document.getElementById(this.email).value)
+      window.location.href = link
     }
 
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1, h2 {
   font-weight: normal;

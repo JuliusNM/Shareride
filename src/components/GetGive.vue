@@ -1,11 +1,10 @@
 <template>
-  <b-container class="">
-    <h4>Welcome, {{firstname}}!</h4>
-    <b-row class="cab">
+  <b-container class="cab">
+    <h4>Welcome, {{firstname}}!</h4><br>
+    <b-row class="">
       <b-col>
         <div>
           <b-card title="Get A Ride"
-            img-src="/static/images/cab.png/"
             style="max-width:20rem;"
             class="mb-2"
             tag="article"
@@ -19,7 +18,6 @@
       <b-col>
         <div>
           <b-card title="Give A Ride"
-            img-src="/static/images/cab.png/"
             style="max-width:20rem;"
             class="mb-2"
             tag="article"

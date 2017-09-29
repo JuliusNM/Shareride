@@ -1,15 +1,14 @@
 <template>
-  <b-container class="">
+  <b-container>
     <b-row>
       <b-col>
-        <div class="cab"> <img src="/static/images/cab.png" width="300" height="300"alt="Kitchen" /></div>
+        <div class="cab"> <img src="/static/images/logo.png" alt="Shareride" /></div>
       </b-col>
       <b-col>
         <div class="advert">
-          <h1>Share a ride,</h1>
-          <h2>save a coin</h2><br>
-          <router-link to="/register"> <button type="button" class="btn btn-outline-success">Get Started</button></router-link>
-         
+          <h1>Save Money,</h1>
+          <h2>Make Friends</h2><br>
+          <router-link to="/register"> <button type="button" class="btn btn-outline-success">Get Started</button></router-link>        
         </div>
       </b-col>
     </b-row>
@@ -26,7 +25,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1, h2 {
   font-weight: normal;
